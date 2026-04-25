@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Bookmark extends Model
+{
+    protected $fillable = [
+        'user_id',
+        'book_id',
+        'page_number',
+        'note',
+    ];
+
+    protected $casts = [
+        'page_number' => 'integer',
+    ];
+
+    /**
+     * Get the user that owns the bookmark.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the book that owns the bookmark.
+     */
+    public function book(): BelongsTo
+    {
+        return $this->belongsTo(Book::class);
+    }
+}

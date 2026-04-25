@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('payments', function (Blueprint $table) {
+            // Ubah kolom method dari enum menjadi string
+            $table->string('method')->change();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('payments', function (Blueprint $table) {
+            // Kembali ke enum jika rollback
+            $table->enum('method', ['qr_code', 'bank_transfer', 'credit_card', 'e_wallet'])->default('qr_code')->change();
+        });
+    }
+};

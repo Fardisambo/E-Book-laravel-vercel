@@ -1,0 +1,226 @@
+// DBML untuk dbdiagram.io - Laravel EbookStore
+// Abaikan tabel bawaan Laravel (sessions, cache, jobs, password_reset_tokens)
+
+Project EbookStore {
+  database_type: 'PostgreSQL'
+  Note: 'Skema database aplikasi Ebook Store - Laravel'
+}
+
+Table users {
+  id bigint [pk, increment, note: 'Primary key']
+  name varchar(255) [not null]
+  email varchar(255) [not null, unique]
+  email_verified_at timestamp [null]
+  password varchar(255) [not null]
+  role varchar(20) [not null, default: 'user', note: 'user | admin']
+  remember_token varchar(100) [null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  Note: 'Pengguna sistem (member & admin)'
+}
+
+Table books {
+  id bigint [pk, increment]
+  title varchar(255) [not null]
+  slug varchar(255) [not null, unique]
+  author varchar(255) [not null]
+  description text [null]
+  isbn varchar(255) [null, unique]
+  published_year int [null]
+  publisher varchar(255) [null]
+  language varchar(255) [null, default: 'id']
+  total_pages int [null]
+  free_pages int [null, default: 10]
+  price decimal(10,2) [null, default: 0]
+  cover_url varchar(255) [null]
+  file_url varchar(255) [null]
+  file_path varchar(255) [null]
+  file_type varchar(255) [null]
+  file_size int [null]
+  views int [null, default: 0]
+  downloads int [null, default: 0]
+  is_featured boolean [null, default: false]
+  is_published boolean [null, default: true]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  Note: 'Katalog ebook'
+}
+
+Table categories {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  slug varchar(255) [not null, unique]
+  description text [null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  Note: 'Kategori buku (many-to-many dengan books)'
+}
+
+Table book_category {
+  id bigint [pk, increment]
+  book_id bigint [not null, ref: > books.id]
+  category_id bigint [not null, ref: > categories.id]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  indexes {
+    (book_id, category_id) [unique]
+  }
+  
+  Note: 'Pivot: buku bisa punya banyak kategori'
+}
+
+Table purchases {
+  id bigint [pk, increment]
+  user_id bigint [not null, ref: > users.id]
+  book_id bigint [not null, ref: > books.id]
+  price decimal(10,2) [not null]
+  status varchar(20) [not null, default: 'pending', note: 'pending | completed | cancelled']
+  purchased_at timestamp [null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  indexes {
+    (user_id, book_id) [unique]
+  }
+  
+  Note: 'Pembelian buku per user'
+}
+
+Table subscriptions {
+  id bigint [pk, increment]
+  user_id bigint [not null, ref: > users.id]
+  plan varchar(20) [not null, default: 'monthly', note: 'monthly | yearly']
+  amount decimal(10,2) [not null]
+  started_at timestamp [null]
+  expires_at timestamp [null]
+  status varchar(20) [not null, default: 'pending', note: 'pending | active | expired | cancelled']
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  Note: 'Langganan premium user'
+}
+
+Table payment_methods {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  type varchar(50) [not null, note: 'bank | e-wallet | qris | cash']
+  description text [null]
+  account_number varchar(255) [null]
+  account_holder varchar(255) [null]
+  icon_url varchar(255) [null]
+  fee_percentage decimal(5,2) [null, default: 0]
+  fee_fixed decimal(10,2) [null, default: 0]
+  is_active boolean [null, default: true]
+  display_order int [null, default: 0]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  Note: 'Metode pembayaran (BCA, Dana, QRIS, dll)'
+}
+
+Table payments {
+  id bigint [pk, increment]
+  user_id bigint [not null, ref: > users.id]
+  payment_method_id bigint [null, ref: > payment_methods.id]
+  paymentable_type varchar(255) [not null, note: 'App\\Models\\Purchase | App\\Models\\Subscription']
+  paymentable_id bigint [not null]
+  amount decimal(10,2) [not null]
+  method varchar(50) [null]
+  qr_code varchar(255) [null]
+  transaction_id varchar(255) [null, unique]
+  status varchar(20) [not null, default: 'pending', note: 'pending | completed | failed | cancelled']
+  notes text [null]
+  paid_at timestamp [null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  indexes {
+    (paymentable_type, paymentable_id)
+  }
+  
+  Note: 'Pembayaran (polymorphic: untuk Purchase atau Subscription)'
+}
+
+Table carts {
+  id bigint [pk, increment]
+  user_id bigint [not null, ref: > users.id, unique]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  Note: 'Keranjang belanja - satu per user'
+}
+
+Table cart_items {
+  id bigint [pk, increment]
+  cart_id bigint [not null, ref: > carts.id]
+  book_id bigint [not null, ref: > books.id]
+  quantity int [not null, default: 1]
+  price int [not null, note: 'dalam rupiah']
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  indexes {
+    (cart_id, book_id) [unique]
+  }
+  
+  Note: 'Item di keranjang'
+}
+
+Table bookmarks {
+  id bigint [pk, increment]
+  user_id bigint [not null, ref: > users.id]
+  book_id bigint [not null, ref: > books.id]
+  page_number int [not null]
+  note varchar(255) [null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  indexes {
+    (user_id, book_id)
+  }
+  
+  Note: 'Bookmark halaman per user per buku'
+}
+
+Table reading_progress {
+  id bigint [pk, increment]
+  user_id bigint [not null, ref: > users.id]
+  book_id bigint [not null, ref: > books.id]
+  current_page int [null, default: 1]
+  total_pages int [null]
+  progress_percentage decimal(5,2) [null, default: 0]
+  last_read_at timestamp [null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  indexes {
+    (user_id, book_id) [unique]
+  }
+  
+  Note: 'Progress baca per user per buku'
+}
+
+Table reviews {
+  id bigint [pk, increment]
+  user_id bigint [not null, ref: > users.id]
+  book_id bigint [not null, ref: > books.id]
+  rating int [not null, note: '1-5']
+  comment text [null]
+  is_approved boolean [null, default: false]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  indexes {
+    (user_id, book_id) [unique]
+    book_id
+  }
+  
+  Note: 'Ulasan buku per user'
+}
+
+// Relasi polymorphic: payments.paymentable -> purchases.id ATAU subscriptions.id
+// (Tidak bisa didefinisikan sebagai FK tunggal di DBML; di aplikasi di-handle Eloquent morphTo)

@@ -1,0 +1,322 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --bg: #f8fafc;
+        --bg-soft: #eef2ff;
+        --panel: #ffffff;
+        --panel-soft: #f8fafc;
+        --text: #0f172a;
+        --text-soft: #475569;
+        --border: #dbe3ef;
+        --primary: #b45309;
+        --primary-strong: #92400e;
+        --ring: rgba(180, 83, 9, 0.35);
+        --success: #166534;
+        --danger: #b91c1c;
+    }
+
+    .dark-theme {
+        --bg: #090d14;
+        --bg-soft: #101826;
+        --panel: #111827;
+        --panel-soft: #1f2937;
+        --text: #f8fafc;
+        --text-soft: #94a3b8;
+        --border: rgba(148, 163, 184, 0.28);
+        --primary: #f59e0b;
+        --primary-strong: #fbbf24;
+        --ring: rgba(245, 158, 11, 0.35);
+        --success: #4ade80;
+        --danger: #f87171;
+    }
+
+    body {
+        background: radial-gradient(1200px 500px at 0% 0%, var(--bg-soft), var(--bg));
+        color: var(--text);
+    }
+}
+
+@layer components {
+    .ui-shell {
+        @apply min-h-screen;
+        color: var(--text);
+    }
+
+    .ui-sidebar,
+    .ui-topbar,
+    .ui-panel {
+        background-color: color-mix(in srgb, var(--panel) 88%, transparent);
+        border: 1px solid var(--border);
+        @apply backdrop-blur rounded-2xl;
+    }
+
+    .ui-card {
+        background-color: color-mix(in srgb, var(--panel) 94%, transparent);
+        border: 1px solid var(--border);
+        @apply rounded-2xl shadow-sm;
+    }
+
+    .ui-title {
+        @apply text-2xl font-semibold tracking-tight;
+        color: var(--text);
+    }
+
+    .ui-muted {
+        color: var(--text-soft);
+    }
+
+    .ui-input,
+    .ui-select,
+    .ui-textarea {
+        @apply w-full rounded-xl px-3 py-2.5 text-sm outline-none transition;
+        background: color-mix(in srgb, var(--panel-soft) 92%, transparent);
+        color: var(--text);
+        border: 1px solid var(--border);
+    }
+
+    .ui-input:focus,
+    .ui-select:focus,
+    .ui-textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px var(--ring);
+    }
+
+    .ui-btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition;
+    }
+
+    .ui-btn-primary {
+        @apply ui-btn text-white;
+        background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+    }
+
+    .ui-btn-primary:hover {
+        filter: brightness(1.05);
+    }
+
+    .ui-btn-ghost {
+        @apply ui-btn;
+        color: var(--text);
+        background-color: color-mix(in srgb, var(--panel-soft) 90%, transparent);
+        border: 1px solid var(--border);
+    }
+
+    .ui-btn-ghost:hover {
+        background-color: color-mix(in srgb, var(--panel-soft) 98%, transparent);
+    }
+
+    .ui-table-wrap {
+        @apply overflow-hidden rounded-2xl;
+        border: 1px solid var(--border);
+        background-color: color-mix(in srgb, var(--panel) 94%, transparent);
+    }
+
+    .ui-table {
+        @apply min-w-full text-sm;
+        color: var(--text);
+    }
+
+    .ui-table thead {
+        background-color: color-mix(in srgb, var(--panel-soft) 92%, transparent);
+    }
+
+    .ui-table th {
+        @apply px-4 py-3 text-left text-xs uppercase tracking-wider;
+        color: var(--text-soft);
+    }
+
+    .ui-table td {
+        @apply px-4 py-3 align-middle;
+        border-top: 1px solid var(--border);
+    }
+
+    .ui-badge {
+        @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium;
+        background-color: color-mix(in srgb, var(--panel-soft) 95%, transparent);
+        border: 1px solid var(--border);
+        color: var(--text);
+    }
+
+    .ui-alert {
+        @apply rounded-xl px-4 py-3 text-sm;
+        border: 1px solid var(--border);
+        background-color: color-mix(in srgb, var(--panel-soft) 96%, transparent);
+    }
+}
+
+@layer utilities {
+    .ui-shell .text-white {
+        color: var(--text) !important;
+    }
+
+    .ui-shell .text-gray-100,
+    .ui-shell .text-gray-200,
+    .ui-shell .text-gray-300,
+    .ui-shell .text-gray-400,
+    .ui-shell .text-gray-500,
+    .ui-shell .text-gray-600 {
+        color: var(--text-soft) !important;
+    }
+
+    .dark-theme .ui-shell .text-white {
+        color: #f8fafc !important;
+    }
+
+    .dark-theme .ui-shell .text-gray-100,
+    .dark-theme .ui-shell .text-gray-200,
+    .dark-theme .ui-shell .text-gray-300,
+    .dark-theme .ui-shell .text-gray-400,
+    .dark-theme .ui-shell .text-gray-500,
+    .dark-theme .ui-shell .text-gray-600 {
+        color: #94a3b8 !important;
+    }
+
+    .text-white-900,
+    .text-white-700,
+    .text-white-600,
+    .text-white-500 {
+        color: var(--text) !important;
+    }
+
+    .border-white-200,
+    .border-black-200 {
+        border-color: var(--border) !important;
+    }
+
+    .bg-white-100 {
+        background-color: color-mix(in srgb, var(--panel-soft) 92%, transparent) !important;
+    }
+
+    .theme-card {
+        background-color: color-mix(in srgb, var(--panel) 94%, transparent) !important;
+        border-color: var(--border) !important;
+        color: var(--text);
+    }
+
+    .ui-shell .bg-white,
+    .ui-shell .bg-gray-50,
+    .ui-shell .bg-gray-100 {
+        background-color: color-mix(in srgb, var(--panel) 94%, transparent) !important;
+        color: var(--text);
+    }
+
+    .ui-shell .shadow,
+    .ui-shell .shadow-sm,
+    .ui-shell .shadow-md {
+        box-shadow: 0 10px 30px -22px rgba(2, 6, 23, 0.8) !important;
+    }
+
+    .ui-shell input[type="text"],
+    .ui-shell input[type="number"],
+    .ui-shell input[type="email"],
+    .ui-shell input[type="password"],
+    .ui-shell input[type="date"],
+    .ui-shell input[type="file"],
+    .ui-shell textarea,
+    .ui-shell select {
+        background: color-mix(in srgb, var(--panel-soft) 92%, transparent) !important;
+        color: var(--text) !important;
+        border: 1px solid var(--border) !important;
+        border-radius: 0.75rem !important;
+    }
+
+    .ui-shell button:not(.unstyled),
+    .ui-shell a.inline-flex,
+    .ui-shell a[class*="rounded-full"][class*="px-"],
+    .ui-shell a[class*="rounded-lg"][class*="px-"] {
+        transition: all 0.2s ease;
+    }
+
+    .ui-shell table {
+        border-color: var(--border) !important;
+    }
+
+    .ui-shell th,
+    .ui-shell td {
+        border-color: var(--border) !important;
+    }
+
+    .admin-layout .ui-card {
+        border-radius: 1rem !important;
+    }
+
+    .admin-layout h1 {
+        color: var(--text) !important;
+        line-height: 1.2;
+    }
+
+    .admin-layout p {
+        color: var(--text-soft);
+    }
+
+    .admin-layout table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .admin-layout thead th {
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-soft) !important;
+        background: color-mix(in srgb, var(--panel-soft) 92%, transparent);
+    }
+
+    .admin-layout tbody tr {
+        background: color-mix(in srgb, var(--panel) 96%, transparent);
+    }
+
+    .admin-layout input[type="text"],
+    .admin-layout input[type="number"],
+    .admin-layout input[type="email"],
+    .admin-layout input[type="password"],
+    .admin-layout input[type="date"],
+    .admin-layout input[type="file"],
+    .admin-layout textarea,
+    .admin-layout select {
+        min-height: 2.65rem;
+    }
+
+    .admin-layout form label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-soft) !important;
+    }
+
+    .admin-layout form button[type="submit"],
+    .admin-layout a[class*="Tambah"],
+    .admin-layout a[class*="Simpan"] {
+        border-radius: 0.75rem !important;
+    }
+
+    @media (max-width: 767px) {
+        .admin-layout .ui-topbar {
+            padding-left: 0.75rem !important;
+            padding-right: 0.75rem !important;
+        }
+
+        .admin-layout .ui-card {
+            padding: 0.9rem !important;
+        }
+
+        .admin-layout .text-3xl {
+            font-size: 1.4rem !important;
+        }
+
+        .admin-layout .text-2xl {
+            font-size: 1.2rem !important;
+        }
+
+        .admin-layout .px-6 {
+            padding-left: 0.75rem !important;
+            padding-right: 0.75rem !important;
+        }
+    }
+}
