@@ -13,7 +13,7 @@
     "outputDirectory": "public",
     "env": {
         "APP_ENV": "production",
-        "APP_DEBUG": "false",
+        "APP_DEBUG": "true",
         "APP_URL": "https://e-book-laravel-vercel.vercel.app/",
         "APP_KEY": "base64:htPN2wEwc1aUa2ImW62uPgnfeNzxYGF87AlB/pDfX8c=",
         "APP_CONFIG_CACHE": "/tmp/config.php",
