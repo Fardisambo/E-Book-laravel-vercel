@@ -29,7 +29,7 @@
         "DB_HOST": "sql211.infinityfree.com",
         "DB_PORT": "3306",
         "DB_DATABASE": "if0_41762297_laravelebook",
-        "DB_USERNAME": "if0_41762297t"
+        "DB_USERNAME": "if0_41762297t",
         "MYSQL_ATTR_SSL_CA": ""
     }
 }
