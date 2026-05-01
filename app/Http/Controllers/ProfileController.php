@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\ReadingProgress;
+use App\Models\Purchase;
+use App\Models\Borrow;
+use App\Models\Bookmark;
 
 class ProfileController extends Controller
 {
@@ -11,7 +15,34 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        return view('profile.show', compact('user'));
+        // Get reading statistics
+        $readingStats = [
+            'totalBooksRead' => ReadingProgress::where('user_id', $user->id)
+                ->where('progress_percentage', 100)
+                ->count(),
+            'currentlyReading' => ReadingProgress::where('user_id', $user->id)
+                ->where('progress_percentage', '>', 0)
+                ->where('progress_percentage', '<', 100)
+                ->count(),
+            'totalPagesRead' => ReadingProgress::where('user_id', $user->id)
+                ->sum('current_page'),
+            'purchasedBooks' => Purchase::where('user_id', $user->id)
+                ->where('status', 'completed')
+                ->count(),
+            'activeBorrows' => Borrow::where('user_id', $user->id)
+                ->where('status', 'active')
+                ->count(),
+            'favoriteBooks' => Bookmark::where('user_id', $user->id)->count(),
+        ];
+
+        // Get recent reading progress
+        $recentReading = ReadingProgress::where('user_id', $user->id)
+            ->with('book')
+            ->orderBy('last_read_at', 'desc')
+            ->take(5)
+            ->get();
+
+        return view('profile.show', compact('user', 'readingStats', 'recentReading'));
     }
 
     public function edit(Request $request)

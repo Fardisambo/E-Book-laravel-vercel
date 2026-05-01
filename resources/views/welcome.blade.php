@@ -323,5 +323,29 @@
             {{ $books->links() }}
         </div>
     </section>
+
+    <!-- Newsletter Subscription -->
+    <section class="mt-12">
+        <div class="ui-card rounded-3xl p-8 sm:p-12 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3"></div>
+            <div class="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+            <div class="relative z-10 max-w-2xl mx-auto text-center">
+                <div class="w-16 h-16 rounded-2xl bg-amber-500/20 flex items-center justify-center mx-auto mb-6">
+                    <i data-lucide="mail" class="w-8 h-8 text-amber-300"></i>
+                </div>
+                <h2 class="font-serif text-2xl sm:text-3xl text-white mb-3">Berlangganan Newsletter</h2>
+                <p class="text-gray-400 mb-6">Dapatkan update terbaru tentang buku baru, promo khusus, dan rekomendasi bacaan langsung ke email Anda.</p>
+                <form action="#" method="POST" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" id="newsletter-form">
+                    @csrf
+                    <input type="email" name="email" placeholder="Masukkan email Anda" required
+                        class="flex-1 rounded-full px-5 py-3 bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500/50">
+                    <button type="submit" class="px-6 py-3 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 text-black font-medium hover:shadow-lg hover:shadow-amber-500/25 transition-all">
+                        Berlangganan
+                    </button>
+                </form>
+                <p class="text-xs text-gray-500 mt-4">Kami tidak akan spam. Unsubscribe kapan saja.</p>
+            </div>
+        </div>
+    </section>
 </div>
 @endsection

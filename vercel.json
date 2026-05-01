@@ -26,9 +26,10 @@
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
         "DB_CONNECTION": "mysql",
-        "DB_HOST": "reaprv.h.filess.io",
+        "DB_HOST": "infinity",
         "DB_PORT": "3307",
         "DB_DATABASE": "LaravelEbook_busyswept",
-        "DB_USERNAME": "LaravelEbook_busyswept"
+        "DB_USERNAME": "LaravelEbook_busyswept",
+        "MYSQL_ATTR_SSL_CA": ""
     }
 }
