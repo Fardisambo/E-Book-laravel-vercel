@@ -26,17 +26,10 @@
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
         "DB_CONNECTION": "mysql",
-<<<<<<< HEAD
         "DB_HOST": "infinity",
         "DB_PORT": "3307",
         "DB_DATABASE": "LaravelEbook_busyswept",
         "DB_USERNAME": "LaravelEbook_busyswept",
-=======
-        "DB_HOST": "sql211.infinityfree.com",
-        "DB_PORT": "3306",
-        "DB_DATABASE": "if0_41762297_laravelebook",
-        "DB_USERNAME": "if0_41762297t",
->>>>>>> 4afc5abff62504e955b6769ecdebd281dcc1d4fe
         "MYSQL_ATTR_SSL_CA": ""
     }
 }
