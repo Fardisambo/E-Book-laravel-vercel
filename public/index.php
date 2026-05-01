@@ -4,8 +4,12 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
+<<<<<<< HEAD
 // Nonaktifkan error reporting untuk deprecation warning
 error_reporting(E_ALL & ~E_DEPRECATED);
+=======
+
+>>>>>>> 4afc5abff62504e955b6769ecdebd281dcc1d4fe
 
 // Determine if the application is in maintenance mode...
 if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
